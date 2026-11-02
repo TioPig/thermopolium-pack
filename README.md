@@ -7,6 +7,7 @@
 **Servidor RPG de Minecraft Java 1.20.1 (Fabric)**
 
 [![Descargar instalador](https://img.shields.io/badge/Descargar-Instalador%20para%20Windows-2ea44f?style=for-the-badge&logo=windows)](https://github.com/TioPig/thermopolium-pack/releases/latest/download/Thermopolium_Instalador.exe)
+[![Descargar para Linux](https://img.shields.io/badge/Descargar-Instalador%20para%20Linux-f0a30a?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/TioPig/thermopolium-pack/releases/latest/download/Thermopolium_Instalador_Linux.sh)
 [![Releases](https://img.shields.io/badge/Ver-Releases-blue?style=for-the-badge&logo=github)](https://github.com/TioPig/thermopolium-pack/releases/latest)
 
 </div>
@@ -32,11 +33,17 @@ Un servidor de Minecraft con alma de RPG, con su propio launcher. Entras al Grem
 
 > Windows puede mostrar *"Windows protegió su PC"* porque el instalador no está firmado: pulsa **Más información → Ejecutar de todas formas**.
 
+### En Linux
+
+1. Instala Python 3 con tkinter si no lo tienes (Ubuntu/Debian/Mint: `sudo apt install python3 python3-tk`; Fedora: `sudo dnf install python3-tkinter`; Arch: `sudo pacman -S tk`).
+2. Descarga **[Thermopolium_Instalador_Linux.sh](https://github.com/TioPig/thermopolium-pack/releases/latest/download/Thermopolium_Instalador_Linux.sh)** y ejecútalo en una terminal: `sh Thermopolium_Instalador_Linux.sh`
+3. Abre **Thermopolium** desde el menú de aplicaciones o el escritorio y pulsa **JUGAR**, igual que en Windows.
+
 ## Requisitos
 
 | | |
 |---|---|
-| Sistema | Windows 10 u 11 (64 bits) |
+| Sistema | Windows 10 u 11 (64 bits), o Linux de 64 bits (x86_64) con Python 3 y tkinter |
 | Memoria | 8 GB de RAM o más (puedes ajustar cuánta usa el juego en el launcher) |
 | Disco | ~2 GB libres |
 | Internet | Para la primera instalación y las actualizaciones |
