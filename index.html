@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thermopolium</title>
+<meta name="description" content="Thermopolium: servidor RPG de Minecraft Java 1.20.1 con clases, rangos, mazmorras, oficios y una vida tranquila de granja, cocina y pesca.">
+<link rel="icon" href="img/icono.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Nunito+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#15110d; --bg2:#1e1813; --card:#261e17; --line:#3d3125; --text:#efe6d8; --mute:#b3a48f;
+  --gold:#e8b44c; --gold2:#ffd27a; --ember:#d9652b; --ok:#5fbf6a;
+  --comun:#b9b9b9; --raro:#55a8ff; --epico:#b56cff; --legendario:#ffa53a;
+  --radius:14px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 "Nunito Sans",system-ui,sans-serif}
+a{color:var(--gold2)}
+img.px{image-rendering:pixelated}
+h1,h2,h3{font-family:Cinzel,Georgia,serif;line-height:1.2;margin:0 0 .5em}
+h2{font-size:clamp(1.7rem,4vw,2.4rem);color:var(--gold2)}
+.wrap{max-width:1120px;margin:0 auto;padding:0 16px}
+section{padding:72px 0}
+.lead{color:var(--mute);max-width:720px;margin:0 0 32px}
+
+/* barra */
+nav{position:sticky;top:0;z-index:10;background:rgba(21,17,13,.88);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;gap:16px;height:60px}
+nav .brand{display:flex;align-items:center;gap:10px;font-family:Cinzel,serif;font-weight:800;color:var(--text);text-decoration:none;margin-right:auto}
+nav .brand img{width:34px;height:34px}
+nav a.l{color:var(--mute);text-decoration:none;font-weight:600}
+nav a.l:hover{color:var(--gold2)}
+@media (max-width:640px){nav a.l.opt{display:none}}
+
+/* portada */
+.hero{position:relative;min-height:88vh;display:flex;align-items:center;text-align:center;
+  background:linear-gradient(180deg,rgba(21,17,13,.35),rgba(21,17,13,.65) 60%,var(--bg)),url(img/fondo.jpg) center/cover}
+.hero .wrap{width:100%}
+.hero img.logo{width:132px;height:132px;filter:drop-shadow(0 6px 18px rgba(0,0,0,.6))}
+.hero h1{font-size:clamp(2.6rem,9vw,5rem);color:#fff;text-shadow:0 4px 24px rgba(0,0,0,.7);margin:.2em 0 .1em}
+.hero p{font-size:1.2rem;max-width:640px;margin:0 auto 28px;text-shadow:0 2px 10px rgba(0,0,0,.8)}
+.btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 22px;border-radius:10px;font-weight:800;text-decoration:none;border:2px solid transparent;cursor:pointer;font:inherit;font-weight:800}
+.btn.main{background:linear-gradient(180deg,var(--gold2),var(--gold));color:#2a1a05}
+.btn.main:hover{filter:brightness(1.08)}
+.btn.alt{background:rgba(0,0,0,.45);color:#fff;border-color:rgba(255,255,255,.35)}
+.btn.alt:hover{border-color:var(--gold2)}
+
+/* tarjetas */
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px}
+.card h3{font-size:1.15rem;color:var(--text)}
+.card p{margin:0;color:var(--mute)}
+.card .ic{font-size:1.8rem;margin-bottom:6px}
+.alt-bg{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.ranks{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.ranks span{font-family:Cinzel,serif;font-weight:800;padding:2px 9px;border-radius:6px;background:#3a2c1e;color:var(--gold2)}
+
+/* pasos */
+.steps{counter-reset:s;display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.steps .card{position:relative;padding-top:46px}
+.steps .card::before{counter-increment:s;content:counter(s);position:absolute;top:14px;left:22px;width:26px;height:26px;border-radius:50%;
+  background:var(--gold);color:#2a1a05;font-weight:800;display:grid;place-items:center;font-size:.9rem}
+
+/* tiendita */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.tab{background:var(--card);color:var(--mute);border:1px solid var(--line);border-radius:999px;padding:9px 18px;font:inherit;font-weight:800;cursor:pointer}
+.tab[aria-selected=true]{background:var(--gold);color:#2a1a05;border-color:var(--gold)}
+.panel[hidden]{display:none}
+.price{font-weight:800;color:var(--gold2);white-space:nowrap}
+.pt::after{content:" Pt";font-size:.8em;color:var(--mute);font-weight:600}
+.clp{color:var(--mute);font-size:.9rem}
+.pack{text-align:center}
+#packs{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+.pack .coin{font-size:2.6rem;line-height:1;filter:grayscale(1) brightness(1.35)}  /* moneda de platino, no de oro */
+.pack .amt{font-family:Cinzel,serif;font-size:2rem;font-weight:800;color:var(--gold2);margin:8px 0 0}
+.pack .money{font-size:1.4rem;font-weight:800;margin:6px 0}
+.pack .bonus{display:inline-block;background:#2f4a2c;color:#bff0b5;border-radius:999px;padding:2px 10px;font-size:.85rem;font-weight:800}
+.pack.best{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold) inset}
+.kit{display:flex;flex-direction:column}
+.kit ul{flex:1;margin:10px 0 14px;padding-left:20px;color:var(--mute)}
+.kit .foot{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--line);padding-top:12px}
+.note{background:#22301f;border:1px solid #3b5634;color:#d5ecd0;border-radius:var(--radius);padding:14px 18px;margin:24px 0 0}
+.note.warn{background:#352318;border-color:#6b4026;color:#f3d9c6}
+
+.filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:18px}
+.chip{background:transparent;color:var(--mute);border:1px solid var(--line);border-radius:8px;padding:6px 12px;font:inherit;font-size:.92rem;font-weight:700;cursor:pointer}
+.chip[aria-pressed=true]{color:var(--text);border-color:var(--gold);background:#2e2419}
+.search{flex:1 1 200px;min-width:0;background:var(--card);border:1px solid var(--line);color:var(--text);border-radius:8px;padding:8px 12px;font:inherit}
+.tiers{display:flex;gap:14px;flex-wrap:wrap;margin:0 0 18px;font-size:.92rem;color:var(--mute)}
+.tiers b{font-weight:800}
+.items{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}
+.item{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center;border-top:3px solid var(--r)}
+.item img,.item .noimg{width:72px;height:72px;margin:4px auto 6px;display:block}
+.item .noimg{display:grid;place-items:center;font-size:2.4rem}
+.item .n{font-weight:800;font-size:.95rem;line-height:1.25;color:var(--r)}
+.item .d{color:var(--mute);font-size:.8rem;margin:4px 0 6px;min-height:1em}
+.count{color:var(--mute);font-size:.9rem;margin-top:14px}
+.soon{text-align:center;padding:48px 22px}
+.soon .ic{font-size:3rem}
+
+footer{padding:36px 0;border-top:1px solid var(--line);color:var(--mute);font-size:.9rem;text-align:center}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a class="brand" href="#"><img src="img/icono.png" alt="">Thermopolium</a>
+  <a class="l opt" href="#mundo">El mundo</a>
+  <a class="l opt" href="#jugar">Cómo jugar</a>
+  <a class="l" href="#tiendita">Tiendita</a>
+</div></nav>
+
+<header class="hero"><div class="wrap">
+  <img class="logo" src="img/icono.png" alt="Logo de Thermopolium">
+  <h1>Thermopolium</h1>
+  <p>Un servidor de Minecraft con alma de RPG. Entra al Gremio de Aventureros, elige tu clase y sube de rango, o quédate en casa cultivando, cocinando y pescando.</p>
+  <div class="btns">
+    <a class="btn main" href="https://github.com/TioPig/thermopolium-pack/releases/latest/download/Thermopolium_Instalador.exe">⬇ Descargar para Windows</a>
+    <a class="btn alt" href="https://github.com/TioPig/thermopolium-pack/releases/latest/download/Thermopolium_Instalador_Linux.sh">🐧 Para Linux</a>
+    <a class="btn alt" href="#tiendita">🪙 Tiendita</a>
+  </div>
+</div></header>
+
+<main>
+<section id="mundo"><div class="wrap">
+  <h2>El mundo</h2>
+  <p class="lead">Minecraft Java 1.20.1 con su propio launcher. Todo se instala y se actualiza solo.</p>
+  <div class="grid">
+    <div class="card"><div class="ic">⚔️</div><h3>5 clases</h3><p>Guerrero, Paladín, Sanador, Cazador y Hechicero. Cada una con su arma, su armadura y un árbol de habilidades con dos caminos.</p></div>
+    <div class="card"><div class="ic">🧝</div><h3>6 razas</h3><p>Humano, elfo, enano, orco, bestial y dracónido, cada una con su rasgo y una pequeña ventaja.</p></div>
+    <div class="card"><div class="ic">🏅</div><h3>Rangos del Gremio</h3><p>Sube con misiones, mazmorras y exámenes de ascenso. Cada rango trae equipo nuevo.</p>
+      <div class="ranks"><span>F</span><span>E</span><span>D</span><span>C</span><span>B</span><span>A</span><span>S</span><span>SS</span></div></div>
+    <div class="card"><div class="ic">🏰</div><h3>Mazmorras y raids</h3><p>Para jugar solo o en grupo, con jefes por rango. Y la Mazmorra Infinita: 100 pisos y ranking semanal.</p></div>
+    <div class="card"><div class="ic">🏙️</div><h3>La Ciudadela</h3><p>Tiendas, banco, subastas, correo, establo de monturas, una taberna y lo que se esconde bajo ella.</p></div>
+    <div class="card"><div class="ic">⚒️</div><h3>Oficios</h3><p>Herrería, cocina, pesca y más, con mesas rúnicas propias y recetas que se aprenden con los maestros.</p></div>
+    <div class="card"><div class="ic">🌾</div><h3>Vida tranquila</h3><p>Granjas, viñedos, cervecería, cocina y pesca con decenas de peces nuevos. Para quien no quiere pelear.</p></div>
+    <div class="card"><div class="ic">🐉</div><h3>Monturas y voz</h3><p>Monturas terrestres, acuáticas y voladoras, y chat de voz por cercanía ya integrado.</p></div>
+  </div>
+</div></section>
+
+<section id="jugar" class="alt-bg"><div class="wrap">
+  <h2>Cómo jugar</h2>
+  <p class="lead">Es un servidor privado: pídele acceso al admin antes de entrar.</p>
+  <div class="steps">
+    <div class="card"><h3>Descarga el instalador</h3><p>Windows 10/11 o Linux de 64 bits. Windows puede decir «Windows protegió su PC»: pulsa <b>Más información → Ejecutar de todas formas</b>.</p></div>
+    <div class="card"><h3>Abre Thermopolium</h3><p>Escribe tu nombre de jugador y pulsa <b>JUGAR</b>. La primera vez baja Java, Minecraft y los mods (~1 GB).</p></div>
+    <div class="card"><h3>Listo</h3><p>Cada vez que pulsas JUGAR el launcher revisa si hay cambios y los instala solo. Necesitas 8 GB de RAM y ~2 GB de disco.</p></div>
+  </div>
+</div></section>
+
+<section id="tiendita"><div class="wrap">
+  <h2>Tiendita</h2>
+  <p class="lead">El Platino, los kits y Heatcraft se pagan por transferencia. El catálogo se compra dentro del juego con <b>Monedas de Platino</b> y es solo apariencia.</p>
+
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" aria-selected="true" data-p="platino">🪙 Platino</button>
+    <button class="tab" role="tab" aria-selected="false" data-p="kits">🎒 Kits</button>
+    <button class="tab" role="tab" aria-selected="false" data-p="cosmeticos">✨ Catálogo</button>
+    <button class="tab" role="tab" aria-selected="false" data-p="heatcraft">🔥 Heatcraft</button>
+  </div>
+
+  <div class="panel" id="p-platino" role="tabpanel">
+    <div class="grid" id="packs"></div>
+    <div class="note">El Platino se gasta en la tienda del juego (tecla <b>C</b>). No se puede pasar a otro jugador ni cambiar por monedas del juego. Si una compra en la tienda falla, se devuelve solo.</div>
+  </div>
+
+  <div class="panel" id="p-kits" role="tabpanel" hidden>
+    <p class="lead">Kits para empezar con lo justo: equipo de aventurero o cosas de granja, pesca y hogar. Cada kit se compra una vez por jugador.</p>
+    <div class="grid" id="kits"></div>
+  </div>
+
+  <div class="panel" id="p-cosmeticos" role="tabpanel" hidden>
+    <div class="note warn" style="margin:0 0 20px">🎮 <b>Solo se compra dentro del juego</b>, con Monedas de Platino: abre la tienda con la tecla <b>C</b>. Aquí puedes ver lo que hay y cuánto cuesta.</div>
+    <div class="tiers" id="tiers"></div>
+    <div class="filters" id="cats"></div>
+    <div class="filters"><input class="search" id="q" type="search" placeholder="Buscar (alas, gato, corona…)" aria-label="Buscar cosmético"></div>
+    <div class="items" id="items"></div>
+    <p class="count" id="count"></p>
+    <button class="btn alt" id="mas" hidden>Ver todo</button>
+  </div>
+
+  <div class="panel" id="p-heatcraft" role="tabpanel" hidden>
+    <div class="note warn" style="margin:0 0 20px">🔞 <b>Solo para mayores de 18.</b> Contenido del mod Heatcraft.</div>
+    <div class="grid" id="heat"></div>
+  </div>
+
+  <div id="comprar">
+    <h3 style="margin-top:40px">Cómo comprar Platino, kits o Heatcraft</h3>
+    <div class="steps">
+      <div class="card"><h3>Elige qué quieres</h3><p>Un paquete de Platino, un kit o algo de Heatcraft.</p></div>
+      <div class="card"><h3>Transfiere y avisa</h3><p><span id="contacto"></span> Manda el comprobante con tu <b>nombre de jugador</b>.</p></div>
+      <div class="card"><h3>Te llega al juego</h3><p>Se entrega en tu cuenta, aunque estés desconectado.</p></div>
+    </div>
+  </div>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+  Thermopolium es un proyecto de fans y no está afiliado a Mojang ni a Microsoft.
+</div></footer>
+
+<script src="tienda.js"></script>
+<script>
+// ===== Datos que edita el dueño =====
+const CONTACTO = 'Escríbele al admin (TioPig) por el grupo del servidor.';
+const PACKS = [            // pt: Platino que recibe; clp: lo que paga
+  {nombre: 'Bolsita',  pt: 300,  clp: 3000},
+  {nombre: 'Bolsa',    pt: 650,  clp: 6000},
+  {nombre: 'Cofre',    pt: 1200, clp: 10000, mejor: true},
+  {nombre: 'Tesoro',   pt: 2600, clp: 20000},
+];
+const KITS = [             // clp: precio en pesos
+  {ic: '🛡️', nombre: 'Kit del Aventurero', clp: 3000, items: ['Armadura de Aventurero completa (4 piezas)', 'Arma de clase de rango F a elección', '32 de comida cocinada']},
+  {ic: '⚔️', nombre: 'Kit del Aventurero + Clase', clp: 6000, items: ['Todo el Kit del Aventurero', 'Tu clase a elección ya desbloqueada, sin hacer la prueba de clase']},
+  {ic: '🧭', nombre: 'Kit del Viajero', clp: 1500, items: ['Saco de dormir', 'Hamaca con cuerda y clavos', '32 antorchas', '16 de comida cocinada']},
+  {ic: '🌾', nombre: 'Kit del Granjero', clp: 2500, items: ['Semillas de cebada, avena, lechuga, tomate, fresa y repollo', 'Espantapájaros', 'Azada de hierro', '16 harina de hueso']},
+  {ic: '🎣', nombre: 'Kit del Pescador', clp: 2500, items: ['32 cebos', 'Línea de cobre', '3 boyas de colores', '16 de comida cocinada']},
+  {ic: '🍲', nombre: 'Kit del Cocinero', clp: 3000, items: ['Olla', 'Sartén', 'Tabla de cortar', 'Cocina de leña']},
+  {ic: '🏡', nombre: 'Kit del Hogar', clp: 4000, items: ['4 cajoneras de roble', 'Barril de fermentación', 'Maceta de parra', 'Hamaca con cuerda y clavos']},
+  {ic: '🎁', nombre: 'Kits de oficio', clp: 11000, items: ['Viajero, Granjero, Pescador, Cocinero y Hogar', 'Ahorras $2.500']},
+];
+const HEAT = [             // precios en pesos; inmortal: precio con inmortalidad (true = incluida)
+  {ic: '✨', nombre: 'Modo Jenny', sub: 'Habilita convertirte en Jenny. Incluye el modo Mujer x Mujer.',
+   precios: [['1 jugador', 5000], ['2 jugadores', 7500]]},
+  {ic: '🌸', nombre: 'Tier 1', sub: 'Bee o Manglelie', clp: 3000, inmortal: 7000},
+  {ic: '💧', nombre: 'Tier 2', sub: 'Allie o Slime Girl', clp: 5000, inmortal: 10000},
+  {ic: '🌙', nombre: 'Tier 3', sub: 'Jenny, Bia, Goblin o Luna', clp: 7000, inmortal: 12000},
+  {ic: '👑', nombre: 'Tier 4', sub: 'Galath, Kobold o Ellie', clp: 15000, inmortal: true},
+];
+// ====================================
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const num = n => n.toLocaleString('es-CL');
+
+$('#contacto').textContent = CONTACTO;
+
+// pestañas
+document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
+  document.querySelectorAll('.tab').forEach(o => o.setAttribute('aria-selected', o === t));
+  document.querySelectorAll('.panel').forEach(p => p.hidden = p.id !== 'p-' + t.dataset.p);
+  $('#comprar').hidden = t.dataset.p === 'cosmeticos';   // el catálogo se compra en el juego
+}));
+
+// paquetes de Platino
+const base = PACKS[0].pt / PACKS[0].clp;
+$('#packs').innerHTML = PACKS.map(p => {
+  const extra = Math.round((p.pt / p.clp / base - 1) * 100);
+  return `<div class="card pack${p.mejor ? ' best' : ''}"><div class="coin">🪙</div><div class="amt">${num(p.pt)}</div>
+    <div class="clp">Platino · ${esc(p.nombre)}</div><div class="money">$${num(p.clp)}</div>
+    ${extra > 0 ? `<span class="bonus">+${extra} % extra</span>` : '<span class="clp">precio base</span>'}</div>`;
+}).join('');
+
+// kits
+$('#kits').innerHTML = KITS.map(k => `<div class="card kit"><h3>${k.ic} ${esc(k.nombre)}</h3>
+  <ul>${k.items.map(i => `<li>${esc(i)}</li>`).join('')}</ul>
+  <div class="foot"><span class="clp">Una vez por jugador</span><span class="price">$${num(k.clp)}</span></div></div>`).join('');
+
+// Heatcraft
+const fila = (txt, v) => `<div class="foot"><span class="clp">${txt}</span><span class="price">${v}</span></div>`;
+$('#heat').innerHTML = HEAT.map(h => `<div class="card kit"><h3>${h.ic} ${esc(h.nombre)}</h3><p style="flex:1;margin-bottom:14px">${esc(h.sub)}</p>
+  ${h.precios ? h.precios.map(([t, v]) => fila(esc(t), '$' + num(v))).join('')
+    : fila('Normal', '$' + num(h.clp)) + fila('Inmortal', h.inmortal === true ? 'Incluido' : '$' + num(h.inmortal))}</div>`).join('');
+
+// cosméticos y comodidades (de platino_tienda.json)
+const T = window.TIENDA || {categorias: [], articulos: []};
+const RAR = {comun: 'Común', raro: 'Raro', epico: 'Épico', legendario: 'Legendario'};
+let cat = 'todo';
+const precios = {};
+T.articulos.forEach(a => (precios[a.rareza] ??= new Set()).add(a.precio));
+$('#tiers').innerHTML = Object.keys(RAR).filter(r => precios[r]).map(r =>
+  `<span><b style="color:var(--${r})">${RAR[r]}</b> desde ${num(Math.min(...precios[r]))} Pt</span>`).join('');
+$('#cats').innerHTML = [{id: 'todo', nombre: 'Todo'}, ...T.categorias].map(c =>
+  `<button class="chip" data-c="${esc(c.id)}" aria-pressed="${c.id === cat}">${esc(c.nombre)}</button>`).join('');
+$('#cats').addEventListener('click', e => {
+  const b = e.target.closest('.chip'); if (!b) return;
+  cat = b.dataset.c; todos = false;
+  document.querySelectorAll('#cats .chip').forEach(o => o.setAttribute('aria-pressed', o === b));
+  pintar();
+});
+let todos = false;   // se muestran 36 hasta pulsar «Ver todo»; cambiar de filtro vuelve a 36
+$('#q').addEventListener('input', () => { todos = false; pintar(); });
+$('#mas').addEventListener('click', () => { todos = true; pintar(); });
+const norm = s => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+function pintar() {
+  const q = norm($('#q').value.trim());
+  const l = T.articulos.filter(a => (cat === 'todo' || a.cat === cat) && (!q || norm(a.nombre + ' ' + a.desc).includes(q)));
+  $('#mas').hidden = todos || l.length <= 36;
+  $('#items').innerHTML = (todos ? l : l.slice(0, 36)).map(a =>`<div class="item" style="--r:var(--${a.rareza})">
+    ${a.img ? `<img class="px" src="${a.img}" alt="" loading="lazy">` : '<div class="noimg">⚙️</div>'}
+    <div class="n">${esc(a.nombre)}</div><div class="d">${esc(a.desc || RAR[a.rareza])}</div>
+    <div class="price pt">${num(a.precio)}</div></div>`).join('');
+  $('#count').textContent = l.length ? `${Math.min(l.length, todos ? l.length : 36)} de ${l.length} artículos` : 'No hay nada con ese nombre.';
+}
+pintar();
+</script>
+</body>
+</html>
