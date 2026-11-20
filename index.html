@@ -103,6 +103,12 @@ nav a.l:hover{color:var(--gold2)}
 .soon{text-align:center;padding:48px 22px}
 .soon .ic{font-size:3rem}
 
+.rules{counter-reset:r;list-style:none;margin:0;padding:0;display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+@media (max-width:400px){.rules{grid-template-columns:1fr}}
+.rules li{counter-increment:r;position:relative;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px 14px 52px;color:var(--mute)}
+.rules li b{color:var(--text)}
+.rules li::before{content:counter(r);position:absolute;left:14px;top:13px;width:26px;height:26px;border-radius:50%;background:#3a2c1e;color:var(--gold2);font-weight:800;display:grid;place-items:center;font-size:.9rem}
+
 footer{padding:36px 0;border-top:1px solid var(--line);color:var(--mute);font-size:.9rem;text-align:center}
 </style>
 </head>
@@ -112,6 +118,7 @@ footer{padding:36px 0;border-top:1px solid var(--line);color:var(--mute);font-si
   <a class="brand" href="#"><img src="img/icono.png" alt="">Thermopolium</a>
   <a class="l opt" href="#mundo">El mundo</a>
   <a class="l opt" href="#jugar">Cómo jugar</a>
+  <a class="l opt" href="#reglas">Reglas</a>
   <a class="l" href="#tiendita">Tiendita</a>
 </div></nav>
 
@@ -153,7 +160,25 @@ footer{padding:36px 0;border-top:1px solid var(--line);color:var(--mute);font-si
   </div>
 </div></section>
 
-<section id="tiendita"><div class="wrap">
+<section id="reglas"><div class="wrap">
+  <h2>Reglas</h2>
+  <p class="lead">Pocas y simples, para que todos lo pasen bien.</p>
+  <ol class="rules">
+    <li><b>Respeto ante todo.</b> Nada de insultos, acoso ni discriminación, en el chat ni en el chat de voz.</li>
+    <li><b>Solo mayores de 18.</b></li>
+    <li><b>Tu nombre es tuyo.</b> No entres con el nombre de otro jugador.</li>
+    <li><b>Sin trampas.</b> Nada de hacks, x-ray ni mods aparte de los del launcher. Si encuentras un error que da ventaja, avísale al admin en vez de aprovecharlo.</li>
+    <li><b>No toques lo ajeno.</b> No rompas, saques ni uses construcciones, cofres o animales de otros sin su permiso.</li>
+    <li><b>PvP solo de mutuo acuerdo.</b> Fuera de El Foso, pelea solo con quien aceptó pelear. No ataques a jugadores nuevos.</li>
+    <li><b>Contenido +18 con consentimiento.</b> Lo de Heatcraft solo entre quienes estén de acuerdo, y lejos de las zonas públicas de la Ciudadela.</li>
+    <li><b>Construye con espacio.</b> No construyas pegado a otro jugador ni dentro de la Ciudadela sin permiso. Evita granjas o máquinas que causen lag; si el admin pide quitar algo, se quita.</li>
+    <li><b>Tratos limpios.</b> Cumple lo que acuerdas. Para tratos seguros usa la Casa de Subastas. Estafar es motivo de sanción.</li>
+    <li><b>Compras.</b> El Platino, los kits y Heatcraft no se devuelven, salvo que falle el servidor. No vendas objetos ni cuentas del servidor por dinero real a otros jugadores.</li>
+  </ol>
+  <div class="note warn"><b>Sanciones:</b> primero un aviso, después una expulsión temporal y, si se repite, el baneo. El admin decide en cada caso y puede saltarse pasos si la falta es grave.</div>
+</div></section>
+
+<section id="tiendita" class="alt-bg"><div class="wrap">
   <h2>Tiendita</h2>
   <p class="lead">El Platino, los kits y Heatcraft se pagan por transferencia. El catálogo se compra dentro del juego con <b>Monedas de Platino</b> y es solo apariencia.</p>
 
