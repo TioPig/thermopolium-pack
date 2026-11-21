@@ -109,6 +109,23 @@ nav a.l:hover{color:var(--gold2)}
 .rules li b{color:var(--text)}
 .rules li::before{content:counter(r);position:absolute;left:14px;top:13px;width:26px;height:26px;border-radius:50%;background:#3a2c1e;color:var(--gold2);font-weight:800;display:grid;place-items:center;font-size:.9rem}
 
+.ver3d{margin-top:8px;background:transparent;color:var(--gold2);border:1px solid var(--line);border-radius:8px;padding:5px 10px;font:inherit;font-size:.82rem;font-weight:800;cursor:pointer}
+.ver3d:hover,.ver3d:focus-visible{border-color:var(--gold);background:#2e2419}
+.item img.ver3d-img{cursor:pointer}
+.modal{position:fixed;inset:0;z-index:50;background:rgba(8,6,4,.78);display:grid;place-items:center;padding:16px}
+.modal[hidden]{display:none}
+.modal-box{width:min(920px,100%);max-height:100%;background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);display:grid;grid-template-columns:1fr 260px;overflow:hidden}
+#pr-canvas{position:relative;min-height:440px;background:radial-gradient(circle at 50% 40%,#3a3026,#15110d 75%);touch-action:none}
+#pr-canvas canvas{position:absolute;inset:0;width:100%;height:100%;cursor:grab}
+#pr-canvas canvas:active{cursor:grabbing}
+#pr-estado{position:absolute;left:0;right:0;top:45%;text-align:center;color:var(--mute);pointer-events:none}
+.pr-lado{padding:20px;display:flex;flex-direction:column;gap:12px;border-left:1px solid var(--line)}
+.pr-lado h3{margin:0;font-size:1.2rem;padding-right:28px}
+.pr-lado p{margin:0;color:var(--mute);font-size:.9rem}
+.pr-lado .hint{font-size:.82rem}
+#pr-cerrar{position:absolute;top:12px;right:12px;width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--text);font-size:1.1rem;cursor:pointer}
+.pr-rel{position:relative}
+@media (max-width:720px){.modal{padding:0}.modal-box{grid-template-columns:1fr;height:100%;border-radius:0}#pr-canvas{min-height:58vh}.pr-lado{border-left:0;border-top:1px solid var(--line)}}
 footer{padding:36px 0;border-top:1px solid var(--line);color:var(--mute);font-size:.9rem;text-align:center}
 </style>
 </head>
@@ -200,7 +217,7 @@ footer{padding:36px 0;border-top:1px solid var(--line);color:var(--mute);font-si
   </div>
 
   <div class="panel" id="p-cosmeticos" role="tabpanel" hidden>
-    <div class="note warn" style="margin:0 0 20px">🎮 <b>Solo se compra dentro del juego</b>, con Monedas de Platino: abre la tienda con la tecla <b>C</b>. Aquí puedes ver lo que hay y cuánto cuesta.</div>
+    <div class="note warn" style="margin:0 0 20px">🎮 <b>Solo se compra dentro del juego</b>, con Monedas de Platino: abre la tienda con la tecla <b>C</b>. Aquí puedes ver lo que hay y cuánto cuesta. Pulsa <b>Ver en 3D</b> para probarte un cosmético en grande.</div>
     <div class="tiers" id="tiers"></div>
     <div class="filters" id="cats"></div>
     <div class="filters"><input class="search" id="q" type="search" placeholder="Buscar (alas, gato, corona…)" aria-label="Buscar cosmético"></div>
@@ -229,6 +246,25 @@ footer{padding:36px 0;border-top:1px solid var(--line);color:var(--mute);font-si
   Thermopolium es un proyecto de fans y no está afiliado a Mojang ni a Microsoft.
 </div></footer>
 
+<div class="modal" id="probador" hidden role="dialog" aria-modal="true" aria-labelledby="pr-nombre">
+  <div class="modal-box">
+    <div id="pr-canvas"><div id="pr-estado"></div></div>
+    <div class="pr-lado pr-rel">
+      <button id="pr-cerrar" aria-label="Cerrar">✕</button>
+      <h3 id="pr-nombre"></h3>
+      <p id="pr-desc"></p>
+      <div class="filters" id="pr-colores" style="margin:0"></div>
+      <div class="filters" style="margin:0">
+        <button class="chip" id="pr-anim" aria-pressed="true">Animación</button>
+        <button class="chip" id="pr-vista">Volver al frente</button>
+      </div>
+      <p class="hint">Arrastra para girar al personaje y usa la rueda (o pellizca) para acercar. Así se ve en el juego; se equipa desde el Ropero.</p>
+    </div>
+  </div>
+</div>
+
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+<script type="module" src="probador.js"></script>
 <script src="tienda.js"></script>
 <script>
 // ===== Datos que edita el dueño =====
@@ -317,9 +353,10 @@ function pintar() {
   const l = T.articulos.filter(a => (cat === 'todo' || a.cat === cat) && (!q || norm(a.nombre + ' ' + a.desc).includes(q)));
   $('#mas').hidden = todos || l.length <= 36;
   $('#items').innerHTML = (todos ? l : l.slice(0, 36)).map(a =>`<div class="item" style="--r:var(--${a.rareza})">
-    ${a.img ? `<img class="px" src="${a.img}" alt="" loading="lazy">` : '<div class="noimg">⚙️</div>'}
+    ${a.img ? `<img class="px${a.demo ? ' ver3d-img ver3d' : ''}" ${a.demo ? `data-id="${esc(a.id)}"` : ''} src="${a.img}" alt="" loading="lazy">` : '<div class="noimg">⚙️</div>'}
     <div class="n">${esc(a.nombre)}</div><div class="d">${esc(a.desc || RAR[a.rareza])}</div>
-    <div class="price pt">${num(a.precio)}</div></div>`).join('');
+    <div class="price pt">${num(a.precio)}</div>
+    ${a.demo ? `<button class="ver3d" data-id="${esc(a.id)}">👁 Ver en 3D</button>` : ''}</div>`).join('');
   $('#count').textContent = l.length ? `${Math.min(l.length, todos ? l.length : 36)} de ${l.length} artículos` : 'No hay nada con ese nombre.';
 }
 pintar();
