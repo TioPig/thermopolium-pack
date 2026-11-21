@@ -8,125 +8,148 @@
 <link rel="icon" href="img/icono.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Nunito+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&family=Nunito+Sans:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
+/* Estilo Minecraft (2026-11-21): letra pixelada, texturas propias (img/arte: piedra, tierra, pasto, madera, dibujadas
+   para la página, no son las de Mojang), paneles y botones con bisel como la interfaz del juego, esquinas rectas. */
 :root{
-  --bg:#15110d; --bg2:#1e1813; --card:#261e17; --line:#3d3125; --text:#efe6d8; --mute:#b3a48f;
-  --gold:#e8b44c; --gold2:#ffd27a; --ember:#d9652b; --ok:#5fbf6a;
-  --comun:#b9b9b9; --raro:#55a8ff; --epico:#b56cff; --legendario:#ffa53a;
-  --radius:14px;
+  --bg:#141210; --bg2:#1b1714; --card:#2b2723; --line:#000; --text:#f2ece2; --mute:#bdb3a4;
+  --gold:#e8b44c; --gold2:#ffd85a; --ember:#d9652b; --ok:#5fbf6a;
+  --comun:#d8d8d8; --raro:#55ffff; --epico:#ff55ff; --legendario:#ffaa00;   /* colores de rareza del juego */
+  --px:"Pixelify Sans","Courier New",monospace;
+  --bisel:inset 3px 3px 0 rgba(255,255,255,.10),inset -3px -3px 0 rgba(0,0,0,.45);
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 "Nunito Sans",system-ui,sans-serif}
+body{margin:0;color:var(--text);font:16px/1.6 "Nunito Sans",system-ui,sans-serif;
+  background:linear-gradient(rgba(16,14,12,.90),rgba(16,14,12,.90)),url(img/arte/piedra.png) 0 0/64px;image-rendering:pixelated}
 a{color:var(--gold2)}
-img.px{image-rendering:pixelated}
-h1,h2,h3{font-family:Cinzel,Georgia,serif;line-height:1.2;margin:0 0 .5em}
-h2{font-size:clamp(1.7rem,4vw,2.4rem);color:var(--gold2)}
+img.px,.ic img,.heat-img{image-rendering:pixelated}
+h1,h2,h3{font-family:var(--px);font-weight:700;line-height:1.2;margin:0 0 .5em;letter-spacing:.02em}
+h2{font-size:clamp(1.8rem,4.4vw,2.6rem);color:var(--gold2);text-shadow:3px 3px 0 #3e2c08}
 .wrap{max-width:1120px;margin:0 auto;padding:0 16px}
-section{padding:72px 0}
+section{padding:72px 0;position:relative}
 .lead{color:var(--mute);max-width:720px;margin:0 0 32px}
 
-/* barra */
-nav{position:sticky;top:0;z-index:10;background:rgba(21,17,13,.88);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-nav .wrap{display:flex;align-items:center;gap:16px;height:60px}
-nav .brand{display:flex;align-items:center;gap:10px;font-family:Cinzel,serif;font-weight:800;color:var(--text);text-decoration:none;margin-right:auto}
+/* barra de madera */
+nav{position:sticky;top:0;z-index:10;border-bottom:4px solid #000;
+  background:linear-gradient(rgba(30,20,12,.55),rgba(30,20,12,.55)),url(img/arte/madera.png) 0 0/64px}
+nav .wrap{display:flex;align-items:center;gap:18px;height:60px}
+nav .brand{display:flex;align-items:center;gap:10px;font-family:var(--px);font-weight:700;font-size:1.25rem;color:#fff;text-decoration:none;margin-right:auto;text-shadow:2px 2px 0 #000}
 nav .brand img{width:34px;height:34px}
-nav a.l{color:var(--mute);text-decoration:none;font-weight:600}
+nav a.l{color:#e8dcc8;text-decoration:none;font-family:var(--px);font-size:1.05rem;text-shadow:2px 2px 0 #000}
 nav a.l:hover{color:var(--gold2)}
 @media (max-width:640px){nav a.l.opt{display:none}}
 
 /* portada */
 .hero{position:relative;min-height:88vh;display:flex;align-items:center;text-align:center;
-  background:linear-gradient(180deg,rgba(21,17,13,.35),rgba(21,17,13,.65) 60%,var(--bg)),url(img/fondo.jpg) center/cover}
+  background:linear-gradient(180deg,rgba(16,14,12,.25),rgba(16,14,12,.6) 65%,rgba(16,14,12,.95)),url(img/fondo.jpg) center/cover}
 .hero .wrap{width:100%}
-.hero img.logo{width:132px;height:132px;filter:drop-shadow(0 6px 18px rgba(0,0,0,.6))}
-.hero h1{font-size:clamp(2.6rem,9vw,5rem);color:#fff;text-shadow:0 4px 24px rgba(0,0,0,.7);margin:.2em 0 .1em}
-.hero p{font-size:1.2rem;max-width:640px;margin:0 auto 28px;text-shadow:0 2px 10px rgba(0,0,0,.8)}
-.btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 22px;border-radius:10px;font-weight:800;text-decoration:none;border:2px solid transparent;cursor:pointer;font:inherit;font-weight:800}
-.btn.main{background:linear-gradient(180deg,var(--gold2),var(--gold));color:#2a1a05}
-.btn.main:hover{filter:brightness(1.08)}
-.btn.alt{background:rgba(0,0,0,.45);color:#fff;border-color:rgba(255,255,255,.35)}
-.btn.alt:hover{border-color:var(--gold2)}
+.hero img.logo{width:132px;height:132px;filter:drop-shadow(0 6px 0 rgba(0,0,0,.6))}
+.hero h1{font-size:clamp(2.8rem,10vw,5.6rem);color:#fff;text-shadow:5px 5px 0 #3a3a3a;margin:.15em 0 .1em}
+.hero p{font-size:1.2rem;max-width:640px;margin:0 auto 28px;text-shadow:2px 2px 0 #000}
+.hero .sub{display:inline-block;font-family:var(--px);color:#ffff55;font-size:1.15rem;text-shadow:2px 2px 0 #3f3f15;transform:rotate(-6deg);margin-bottom:6px}
 
-/* tarjetas */
+/* botones como los del juego */
+.btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;font-family:var(--px);font-size:1.1rem;color:#fff;text-decoration:none;cursor:pointer;
+  background:#6f6f6f;border:3px solid #000;box-shadow:inset 3px 3px 0 #a5a5a5,inset -3px -3px 0 #3d3d3d;text-shadow:2px 2px 0 #3f3f3f}
+.btn:hover,.btn:focus-visible{background:#7b84c4;box-shadow:inset 3px 3px 0 #b8c0ff,inset -3px -3px 0 #3a4078;outline:none}
+.btn.main{background:#3c8527;box-shadow:inset 3px 3px 0 #6cc349,inset -3px -3px 0 #1d4512}
+.btn.main:hover{background:#4a9e31}
+.btn.alt{background:#6f6f6f}
+
+/* paneles con bisel */
 .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
-.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px}
-.card h3{font-size:1.15rem;color:var(--text)}
+.card{background:var(--card);border:3px solid #000;box-shadow:var(--bisel);padding:22px}
+.card h3{font-size:1.25rem;color:#fff}
 .card p{margin:0;color:var(--mute)}
-.card .ic{font-size:1.8rem;margin-bottom:6px}
-.alt-bg{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.card .ic{margin-bottom:10px}
+.card .ic img{width:48px;height:48px;display:block;background:#373737;padding:6px;box-shadow:inset 3px 3px 0 #1e1e1e,inset -3px -3px 0 #5a5a5a;border:2px solid #000}
+.alt-bg{background:linear-gradient(rgba(20,14,10,.84),rgba(20,14,10,.84)),url(img/arte/tierra.png) 0 0/64px}
+.alt-bg::before{content:"";position:absolute;left:0;right:0;top:-4px;height:32px;background:url(img/arte/pasto.png) 0 0/64px 32px repeat-x;border-top:4px solid #000}
+.alt-bg{padding-top:96px}
 .ranks{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
-.ranks span{font-family:Cinzel,serif;font-weight:800;padding:2px 9px;border-radius:6px;background:#3a2c1e;color:var(--gold2)}
+.ranks span{font-family:var(--px);padding:2px 9px;background:#3a2c1e;color:var(--gold2);border:2px solid #000}
 
 /* pasos */
 .steps{counter-reset:s;display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
-.steps .card{position:relative;padding-top:46px}
-.steps .card::before{counter-increment:s;content:counter(s);position:absolute;top:14px;left:22px;width:26px;height:26px;border-radius:50%;
-  background:var(--gold);color:#2a1a05;font-weight:800;display:grid;place-items:center;font-size:.9rem}
+.steps .card{position:relative;padding-top:52px}
+.steps .card::before{counter-increment:s;content:counter(s);position:absolute;top:14px;left:22px;width:30px;height:30px;
+  background:var(--gold);color:#2a1a05;font-family:var(--px);font-size:1.1rem;display:grid;place-items:center;border:2px solid #000;box-shadow:inset -3px -3px 0 rgba(0,0,0,.3)}
 
 /* tiendita */
-.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
-.tab{background:var(--card);color:var(--mute);border:1px solid var(--line);border-radius:999px;padding:9px 18px;font:inherit;font-weight:800;cursor:pointer}
-.tab[aria-selected=true]{background:var(--gold);color:#2a1a05;border-color:var(--gold)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:24px}
+.tab{background:#3a3631;color:#d8d0c0;border:3px solid #000;box-shadow:var(--bisel);padding:9px 18px;font-family:var(--px);font-size:1.05rem;cursor:pointer}
+.tab[aria-selected=true]{background:#c6c6c6;color:#2a2a2a;box-shadow:inset 3px 3px 0 #fff,inset -3px -3px 0 #555}
 .panel[hidden]{display:none}
-.price{font-weight:800;color:var(--gold2);white-space:nowrap}
-.pt::after{content:" Pt";font-size:.8em;color:var(--mute);font-weight:600}
+.price{font-family:var(--px);font-size:1.15rem;color:var(--gold2);white-space:nowrap;text-shadow:2px 2px 0 #3e2c08}
+.pt::after{content:" Pt";font-size:.8em;color:var(--mute)}
 .clp{color:var(--mute);font-size:.9rem}
 .pack{text-align:center}
 #packs{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
-.pack .coin{font-size:2.6rem;line-height:1;filter:grayscale(1) brightness(1.35)}  /* moneda de platino, no de oro */
-.pack .amt{font-family:Cinzel,serif;font-size:2rem;font-weight:800;color:var(--gold2);margin:8px 0 0}
-.pack .money{font-size:1.4rem;font-weight:800;margin:6px 0}
-.pack .bonus{display:inline-block;background:#2f4a2c;color:#bff0b5;border-radius:999px;padding:2px 10px;font-size:.85rem;font-weight:800}
-.pack.best{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold) inset}
+.pack .coin{width:56px;height:56px;margin:0 auto;image-rendering:pixelated;filter:grayscale(1) brightness(1.5)}   /* moneda de platino */
+.pack .amt{font-family:var(--px);font-size:2.1rem;color:#fff;margin:8px 0 0;text-shadow:3px 3px 0 #333}
+.pack .money{font-family:var(--px);font-size:1.4rem;margin:6px 0;color:#7cfc5c;text-shadow:2px 2px 0 #1d4512}
+.pack .bonus{display:inline-block;background:#2f4a2c;color:#bff0b5;border:2px solid #000;padding:2px 10px;font-family:var(--px);font-size:.9rem}
+.pack.best{background:#3a3020;box-shadow:inset 3px 3px 0 #ffd85a,inset -3px -3px 0 #7a5a10}
 .kit{display:flex;flex-direction:column}
 .kit ul{flex:1;margin:10px 0 14px;padding-left:20px;color:var(--mute)}
-.kit .foot{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--line);padding-top:12px}
-.note{background:#22301f;border:1px solid #3b5634;color:#d5ecd0;border-radius:var(--radius);padding:14px 18px;margin:24px 0 0}
-.note.warn{background:#352318;border-color:#6b4026;color:#f3d9c6}
+.kit .foot{display:flex;justify-content:space-between;align-items:baseline;border-top:3px solid #000;padding-top:12px}
+.kit h3 .ic-inline{width:32px;height:32px;vertical-align:middle;margin-right:6px;image-rendering:pixelated}
+.note{background:#22301f;border:3px solid #000;box-shadow:var(--bisel);color:#d5ecd0;padding:14px 18px;margin:24px 0 0}
+.note.warn{background:#3a2418;color:#f3d9c6}
 
+/* Heatcraft */
+.heat{text-align:center;display:flex;flex-direction:column}
+.heat .heat-img{width:96px;height:96px;margin:4px auto 10px;display:block;background:#2a1f2a;padding:12px;border:3px solid #000;box-shadow:inset 3px 3px 0 #4a3a4a,inset -3px -3px 0 #140e14}
+.heat h3{margin-bottom:4px}
+.heat p{flex:1;margin-bottom:14px}
+.heat .foot{display:flex;justify-content:space-between;align-items:baseline;gap:10px;border-top:3px solid #000;padding-top:8px;margin-top:6px}
+
+/* catálogo */
 .filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:18px}
-.chip{background:transparent;color:var(--mute);border:1px solid var(--line);border-radius:8px;padding:6px 12px;font:inherit;font-size:.92rem;font-weight:700;cursor:pointer}
-.chip[aria-pressed=true]{color:var(--text);border-color:var(--gold);background:#2e2419}
-.search{flex:1 1 200px;min-width:0;background:var(--card);border:1px solid var(--line);color:var(--text);border-radius:8px;padding:8px 12px;font:inherit}
+.chip{background:#3a3631;color:#d8d0c0;border:3px solid #000;box-shadow:var(--bisel);padding:5px 12px;font-family:var(--px);font-size:.95rem;cursor:pointer}
+.chip[aria-pressed=true]{background:#c6c6c6;color:#2a2a2a;box-shadow:inset 3px 3px 0 #fff,inset -3px -3px 0 #555}
+.search{flex:1 1 200px;min-width:0;background:#000;border:3px solid #a0a0a0;color:#fff;padding:8px 12px;font:inherit}
+.search:focus{border-color:#fff;outline:none}
 .tiers{display:flex;gap:14px;flex-wrap:wrap;margin:0 0 18px;font-size:.92rem;color:var(--mute)}
-.tiers b{font-weight:800}
+.tiers b{font-family:var(--px);font-weight:700}
 .items{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}
-.item{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center;border-top:3px solid var(--r)}
-.item img,.item .noimg{width:72px;height:72px;margin:4px auto 6px;display:block}
+.item{background:var(--card);border:3px solid #000;box-shadow:var(--bisel);padding:12px;text-align:center;position:relative}
+.item::after{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:var(--r)}
+.item img,.item .noimg{width:72px;height:72px;margin:6px auto 8px;display:block;background:#8b8b8b;box-shadow:inset 3px 3px 0 #373737,inset -3px -3px 0 #fff;padding:4px}
 .item .noimg{display:grid;place-items:center;font-size:2.4rem}
-.item .n{font-weight:800;font-size:.95rem;line-height:1.25;color:var(--r)}
+.item .n{font-family:var(--px);font-size:1rem;line-height:1.25;color:var(--r);text-shadow:2px 2px 0 rgba(0,0,0,.6)}
 .item .d{color:var(--mute);font-size:.8rem;margin:4px 0 6px;min-height:1em}
 .count{color:var(--mute);font-size:.9rem;margin-top:14px}
-.soon{text-align:center;padding:48px 22px}
-.soon .ic{font-size:3rem}
 
+/* reglas */
 .rules{counter-reset:r;list-style:none;margin:0;padding:0;display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
 @media (max-width:400px){.rules{grid-template-columns:1fr}}
-.rules li{counter-increment:r;position:relative;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px 14px 52px;color:var(--mute)}
+.rules li{counter-increment:r;position:relative;background:var(--card);border:3px solid #000;box-shadow:var(--bisel);padding:14px 16px 14px 56px;color:var(--mute)}
 .rules li b{color:var(--text)}
-.rules li::before{content:counter(r);position:absolute;left:14px;top:13px;width:26px;height:26px;border-radius:50%;background:#3a2c1e;color:var(--gold2);font-weight:800;display:grid;place-items:center;font-size:.9rem}
+.rules li::before{content:counter(r);position:absolute;left:14px;top:13px;width:30px;height:30px;background:#3a2c1e;color:var(--gold2);font-family:var(--px);display:grid;place-items:center;border:2px solid #000}
 
-.ver3d{margin-top:8px;background:transparent;color:var(--gold2);border:1px solid var(--line);border-radius:8px;padding:5px 10px;font:inherit;font-size:.82rem;font-weight:800;cursor:pointer}
-.ver3d:hover,.ver3d:focus-visible{border-color:var(--gold);background:#2e2419}
-.item img.ver3d-img{cursor:pointer}
-.modal{position:fixed;inset:0;z-index:50;background:rgba(8,6,4,.78);display:grid;place-items:center;padding:16px}
+/* probador 3D */
+.ver3d{margin-top:8px;background:#6f6f6f;color:#fff;border:3px solid #000;box-shadow:inset 2px 2px 0 #a5a5a5,inset -2px -2px 0 #3d3d3d;padding:4px 10px;font-family:var(--px);font-size:.9rem;cursor:pointer;text-shadow:1px 1px 0 #3f3f3f}
+.ver3d:hover,.ver3d:focus-visible{background:#7b84c4;box-shadow:inset 2px 2px 0 #b8c0ff,inset -2px -2px 0 #3a4078;outline:none}
+.item img.ver3d-img{cursor:pointer;margin-top:6px;padding:4px;border:0}
+.modal{position:fixed;inset:0;z-index:50;background:rgba(8,6,4,.8);display:grid;place-items:center;padding:16px}
 .modal[hidden]{display:none}
-.modal-box{width:min(920px,100%);max-height:100%;background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);display:grid;grid-template-columns:1fr 260px;overflow:hidden}
-#pr-canvas{position:relative;min-height:440px;background:radial-gradient(circle at 50% 40%,#3a3026,#15110d 75%);touch-action:none}
-#pr-canvas canvas{position:absolute;inset:0;width:100%;height:100%;cursor:grab}
+.modal-box{width:min(920px,100%);max-height:100%;background:#c6c6c6;border:3px solid #000;box-shadow:inset 4px 4px 0 #fff,inset -4px -4px 0 #555;display:grid;grid-template-columns:1fr 260px;overflow:hidden;padding:8px;gap:8px}
+#pr-canvas{position:relative;min-height:440px;background:radial-gradient(circle at 50% 40%,#3a3026,#15110d 75%);touch-action:none;border:3px solid #000;box-shadow:inset 3px 3px 0 #373737}
+#pr-canvas canvas{position:absolute;inset:0;width:100%;height:100%;cursor:grab;image-rendering:auto}
 #pr-canvas canvas:active{cursor:grabbing}
 #pr-estado{position:absolute;left:0;right:0;top:45%;text-align:center;color:var(--mute);pointer-events:none}
-.pr-lado{padding:20px;display:flex;flex-direction:column;gap:12px;border-left:1px solid var(--line)}
-.pr-lado h3{margin:0;font-size:1.2rem;padding-right:28px}
-.pr-lado p{margin:0;color:var(--mute);font-size:.9rem}
+.pr-lado{padding:12px;display:flex;flex-direction:column;gap:12px;color:#3f3f3f}
+.pr-lado h3{margin:0;font-size:1.3rem;padding-right:34px;color:#3f3f3f;text-shadow:none}
+.pr-lado p{margin:0;color:#555;font-size:.9rem}
 .pr-lado .hint{font-size:.82rem}
-#pr-cerrar{position:absolute;top:12px;right:12px;width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--text);font-size:1.1rem;cursor:pointer}
+#pr-cerrar{position:absolute;top:8px;right:8px;width:30px;height:30px;border:3px solid #000;background:#6f6f6f;color:#fff;font-size:1rem;cursor:pointer;box-shadow:inset 2px 2px 0 #a5a5a5,inset -2px -2px 0 #3d3d3d}
 .pr-rel{position:relative}
-@media (max-width:720px){.modal{padding:0}.modal-box{grid-template-columns:1fr;height:100%;border-radius:0}#pr-canvas{min-height:58vh}.pr-lado{border-left:0;border-top:1px solid var(--line)}}
-footer{padding:36px 0;border-top:1px solid var(--line);color:var(--mute);font-size:.9rem;text-align:center}
+@media (max-width:720px){.modal{padding:0}.modal-box{grid-template-columns:1fr;height:100%}#pr-canvas{min-height:56vh}}
+footer{padding:36px 0;border-top:4px solid #000;color:var(--mute);font-size:.9rem;text-align:center;background:rgba(0,0,0,.4)}
 </style>
 </head>
 <body>
@@ -135,13 +158,14 @@ footer{padding:36px 0;border-top:1px solid var(--line);color:var(--mute);font-si
   <a class="brand" href="#"><img src="img/icono.png" alt="">Thermopolium</a>
   <a class="l opt" href="#mundo">El mundo</a>
   <a class="l opt" href="#jugar">Cómo jugar</a>
-  <a class="l opt" href="#reglas">Reglas</a>
   <a class="l" href="#tiendita">Tiendita</a>
+  <a class="l opt" href="#reglas">Reglas</a>
 </div></nav>
 
 <header class="hero"><div class="wrap">
   <img class="logo" src="img/icono.png" alt="Logo de Thermopolium">
   <h1>Thermopolium</h1>
+  <div class="sub">¡Con alma de RPG!</div>
   <p>Un servidor de Minecraft con alma de RPG. Entra al Gremio de Aventureros, elige tu clase y sube de rango, o quédate en casa cultivando, cocinando y pescando.</p>
   <div class="btns">
     <a class="btn main" href="https://github.com/TioPig/thermopolium-pack/releases/latest/download/Thermopolium_Instalador.exe">⬇ Descargar para Windows</a>
@@ -155,15 +179,15 @@ footer{padding:36px 0;border-top:1px solid var(--line);color:var(--mute);font-si
   <h2>El mundo</h2>
   <p class="lead">Minecraft Java 1.20.1 con su propio launcher. Todo se instala y se actualiza solo.</p>
   <div class="grid">
-    <div class="card"><div class="ic">⚔️</div><h3>5 clases</h3><p>Guerrero, Paladín, Sanador, Cazador y Hechicero. Cada una con su arma, su armadura y un árbol de habilidades con dos caminos.</p></div>
-    <div class="card"><div class="ic">🧝</div><h3>6 razas</h3><p>Humano, elfo, enano, orco, bestial y dracónido, cada una con su rasgo y una pequeña ventaja.</p></div>
-    <div class="card"><div class="ic">🏅</div><h3>Rangos del Gremio</h3><p>Sube con misiones, mazmorras y exámenes de ascenso. Cada rango trae equipo nuevo.</p>
+    <div class="card"><div class="ic"><img src="img/arte/mundo_clases.png" alt=""></div><h3>5 clases</h3><p>Guerrero, Paladín, Sanador, Cazador y Hechicero. Cada una con su arma, su armadura y un árbol de habilidades con dos caminos.</p></div>
+    <div class="card"><div class="ic"><img src="img/arte/mundo_razas.png" alt=""></div><h3>6 razas</h3><p>Humano, elfo, enano, orco, bestial y dracónido, cada una con su rasgo y una pequeña ventaja.</p></div>
+    <div class="card"><div class="ic"><img src="img/arte/mundo_rangos.png" alt=""></div><h3>Rangos del Gremio</h3><p>Sube con misiones, mazmorras y exámenes de ascenso. Cada rango trae equipo nuevo.</p>
       <div class="ranks"><span>F</span><span>E</span><span>D</span><span>C</span><span>B</span><span>A</span><span>S</span><span>SS</span></div></div>
-    <div class="card"><div class="ic">🏰</div><h3>Mazmorras y raids</h3><p>Para jugar solo o en grupo, con jefes por rango. Y la Mazmorra Infinita: 100 pisos y ranking semanal.</p></div>
-    <div class="card"><div class="ic">🏙️</div><h3>La Ciudadela</h3><p>Tiendas, banco, subastas, correo, establo de monturas, una taberna y lo que se esconde bajo ella.</p></div>
-    <div class="card"><div class="ic">⚒️</div><h3>Oficios</h3><p>Herrería, cocina, pesca y más, con mesas rúnicas propias y recetas que se aprenden con los maestros.</p></div>
-    <div class="card"><div class="ic">🌾</div><h3>Vida tranquila</h3><p>Granjas, viñedos, cervecería, cocina y pesca con decenas de peces nuevos. Para quien no quiere pelear.</p></div>
-    <div class="card"><div class="ic">🐉</div><h3>Monturas y voz</h3><p>Monturas terrestres, acuáticas y voladoras, y chat de voz por cercanía ya integrado.</p></div>
+    <div class="card"><div class="ic"><img src="img/arte/mundo_mazmorras.png" alt=""></div><h3>Mazmorras y raids</h3><p>Para jugar solo o en grupo, con jefes por rango. Y la Mazmorra Infinita: 100 pisos y ranking semanal.</p></div>
+    <div class="card"><div class="ic"><img src="img/arte/mundo_oficios.png" alt=""></div><h3>Oficios</h3><p>Herrería, costura, joyería, alquimia y más, con mesas rúnicas propias y recetas que se aprenden con los maestros.</p></div>
+    <div class="card"><div class="ic"><img src="img/arte/mundo_ciudadela.png" alt=""></div><h3>La Ciudadela</h3><p>Tiendas, banco, subastas, correo, establo de monturas, una taberna y lo que se esconde bajo ella.</p></div>
+    <div class="card"><div class="ic"><img src="img/arte/mundo_tranquila.png" alt=""></div><h3>Vida tranquila</h3><p>Granjas, viñedos, cervecería, cocina y pesca con decenas de peces nuevos. Para quien no quiere pelear.</p></div>
+    <div class="card"><div class="ic"><img src="img/arte/mundo_monturas.png" alt=""></div><h3>Monturas y voz</h3><p>Monturas terrestres, acuáticas y voladoras, y chat de voz por cercanía ya integrado.</p></div>
   </div>
 </div></section>
 
@@ -177,25 +201,8 @@ footer{padding:36px 0;border-top:1px solid var(--line);color:var(--mute);font-si
   </div>
 </div></section>
 
-<section id="reglas"><div class="wrap">
-  <h2>Reglas</h2>
-  <p class="lead">Pocas y simples, para que todos lo pasen bien.</p>
-  <ol class="rules">
-    <li><b>Respeto ante todo.</b> Nada de insultos, acoso ni discriminación, en el chat ni en el chat de voz.</li>
-    <li><b>Solo mayores de 18.</b></li>
-    <li><b>Tu nombre es tuyo.</b> No entres con el nombre de otro jugador.</li>
-    <li><b>Sin trampas.</b> Nada de hacks, x-ray ni mods aparte de los del launcher. Si encuentras un error que da ventaja, avísale al admin en vez de aprovecharlo.</li>
-    <li><b>No toques lo ajeno.</b> No rompas, saques ni uses construcciones, cofres o animales de otros sin su permiso.</li>
-    <li><b>PvP solo de mutuo acuerdo.</b> Fuera de El Foso, pelea solo con quien aceptó pelear. No ataques a jugadores nuevos.</li>
-    <li><b>Contenido +18 con consentimiento.</b> Lo de Heatcraft solo entre quienes estén de acuerdo, y lejos de las zonas públicas de la Ciudadela.</li>
-    <li><b>Construye con espacio.</b> No construyas pegado a otro jugador ni dentro de la Ciudadela sin permiso. Evita granjas o máquinas que causen lag; si el admin pide quitar algo, se quita.</li>
-    <li><b>Tratos limpios.</b> Cumple lo que acuerdas. Para tratos seguros usa la Casa de Subastas. Estafar es motivo de sanción.</li>
-    <li><b>Compras.</b> El Platino, los kits y Heatcraft no se devuelven, salvo que falle el servidor. No vendas objetos ni cuentas del servidor por dinero real a otros jugadores.</li>
-  </ol>
-  <div class="note warn"><b>Sanciones:</b> primero un aviso, después una expulsión temporal y, si se repite, el baneo. El admin decide en cada caso y puede saltarse pasos si la falta es grave.</div>
-</div></section>
 
-<section id="tiendita" class="alt-bg"><div class="wrap">
+<section id="tiendita"><div class="wrap">
   <h2>Tiendita</h2>
   <p class="lead">El Platino, los kits y Heatcraft se pagan por transferencia. El catálogo se compra dentro del juego con <b>Monedas de Platino</b> y es solo apariencia.</p>
 
@@ -239,6 +246,24 @@ footer{padding:36px 0;border-top:1px solid var(--line);color:var(--mute);font-si
       <div class="card"><h3>Te llega al juego</h3><p>Se entrega en tu cuenta, aunque estés desconectado.</p></div>
     </div>
   </div>
+</div></section>
+
+<section id="reglas" class="alt-bg"><div class="wrap">
+  <h2>Reglas</h2>
+  <p class="lead">Pocas y simples, para que todos lo pasen bien.</p>
+  <ol class="rules">
+    <li><b>Respeto ante todo.</b> Nada de insultos, acoso ni discriminación, en el chat ni en el chat de voz.</li>
+    <li><b>Solo mayores de 18.</b></li>
+    <li><b>Tu nombre es tuyo.</b> No entres con el nombre de otro jugador.</li>
+    <li><b>Sin trampas.</b> Nada de hacks, x-ray ni mods aparte de los del launcher. Si encuentras un error que da ventaja, avísale al admin en vez de aprovecharlo.</li>
+    <li><b>No toques lo ajeno.</b> No rompas, saques ni uses construcciones, cofres o animales de otros sin su permiso.</li>
+    <li><b>PvP solo de mutuo acuerdo.</b> Fuera de El Foso, pelea solo con quien aceptó pelear. No ataques a jugadores nuevos.</li>
+    <li><b>Contenido +18 con consentimiento.</b> Lo de Heatcraft solo entre quienes estén de acuerdo, y lejos de las zonas públicas de la Ciudadela.</li>
+    <li><b>Construye con espacio.</b> No construyas pegado a otro jugador ni dentro de la Ciudadela sin permiso. Evita granjas o máquinas que causen lag; si el admin pide quitar algo, se quita.</li>
+    <li><b>Tratos limpios.</b> Cumple lo que acuerdas. Para tratos seguros usa la Casa de Subastas. Estafar es motivo de sanción.</li>
+    <li><b>Compras.</b> El Platino, los kits y Heatcraft no se devuelven, salvo que falle el servidor. No vendas objetos ni cuentas del servidor por dinero real a otros jugadores.</li>
+  </ol>
+  <div class="note warn"><b>Sanciones:</b> primero un aviso, después una expulsión temporal y, si se repite, el baneo. El admin decide en cada caso y puede saltarse pasos si la falta es grave.</div>
 </div></section>
 </main>
 
@@ -286,12 +311,12 @@ const KITS = [             // clp: precio en pesos
   {ic: '🎁', nombre: 'Kits de oficio', clp: 11000, items: ['Viajero, Granjero, Pescador, Cocinero y Hogar', 'Ahorras $2.500']},
 ];
 const HEAT = [             // precios en pesos; inmortal: precio con inmortalidad (true = incluida)
-  {ic: '✨', nombre: 'Modo Jenny', sub: 'Habilita convertirte en Jenny. Incluye el modo Mujer x Mujer.',
+  {img: 'heat_jenny', nombre: 'Modo Jenny', sub: 'Habilita convertirte en Jenny. Incluye el modo Mujer x Mujer.',
    precios: [['1 jugador', 5000], ['2 jugadores', 7500]]},
-  {ic: '🌸', nombre: 'Tier 1', sub: 'Bee o Manglelie', clp: 3000, inmortal: 7000},
-  {ic: '💧', nombre: 'Tier 2', sub: 'Allie o Slime Girl', clp: 5000, inmortal: 10000},
-  {ic: '🌙', nombre: 'Tier 3', sub: 'Jenny, Bia, Goblin o Luna', clp: 7000, inmortal: 12000},
-  {ic: '👑', nombre: 'Tier 4', sub: 'Galath, Kobold o Ellie', clp: 15000, inmortal: true},
+  {img: 'heat_t1', nombre: 'Tier 1', sub: 'Bee o Manglelie', clp: 3000, inmortal: 7000},
+  {img: 'heat_t2', nombre: 'Tier 2', sub: 'Allie o Slime Girl', clp: 5000, inmortal: 10000},
+  {img: 'heat_t3', nombre: 'Tier 3', sub: 'Jenny, Bia, Goblin o Luna', clp: 7000, inmortal: 12000},
+  {img: 'heat_t4', nombre: 'Tier 4', sub: 'Galath, Kobold o Ellie', clp: 15000, inmortal: true},
 ];
 // ====================================
 
@@ -312,7 +337,7 @@ document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () =>
 const base = PACKS[0].pt / PACKS[0].clp;
 $('#packs').innerHTML = PACKS.map(p => {
   const extra = Math.round((p.pt / p.clp / base - 1) * 100);
-  return `<div class="card pack${p.mejor ? ' best' : ''}"><div class="coin">🪙</div><div class="amt">${num(p.pt)}</div>
+  return `<div class="card pack${p.mejor ? ' best' : ''}"><img class="coin" src="img/arte/mundo_ciudadela.png" alt=""><div class="amt">${num(p.pt)}</div>
     <div class="clp">Platino · ${esc(p.nombre)}</div><div class="money">$${num(p.clp)}</div>
     ${extra > 0 ? `<span class="bonus">+${extra} % extra</span>` : '<span class="clp">precio base</span>'}</div>`;
 }).join('');
@@ -324,12 +349,15 @@ $('#kits').innerHTML = KITS.map(k => `<div class="card kit"><h3>${k.ic} ${esc(k.
 
 // Heatcraft
 const fila = (txt, v) => `<div class="foot"><span class="clp">${txt}</span><span class="price">${v}</span></div>`;
-$('#heat').innerHTML = HEAT.map(h => `<div class="card kit"><h3>${h.ic} ${esc(h.nombre)}</h3><p style="flex:1;margin-bottom:14px">${esc(h.sub)}</p>
+$('#heat').innerHTML = HEAT.map(h => `<div class="card heat"><img class="heat-img" src="img/arte/${h.img}.png" alt=""><h3>${esc(h.nombre)}</h3><p>${esc(h.sub)}</p>
   ${h.precios ? h.precios.map(([t, v]) => fila(esc(t), '$' + num(v))).join('')
     : fila('Normal', '$' + num(h.clp)) + fila('Inmortal', h.inmortal === true ? 'Incluido' : '$' + num(h.inmortal))}</div>`).join('');
 
 // cosméticos y comodidades (de platino_tienda.json)
 const T = window.TIENDA || {categorias: [], articulos: []};
+const ORD_RAR = {legendario: 0, epico: 1, raro: 2, comun: 3}, ORD_CAT = {};
+T.categorias.forEach((c, i) => ORD_CAT[c.id] = i);
+T.articulos.sort((a, b) => (ORD_CAT[a.cat] ?? 99) - (ORD_CAT[b.cat] ?? 99) || (ORD_RAR[a.rareza] ?? 9) - (ORD_RAR[b.rareza] ?? 9) || a.nombre.localeCompare(b.nombre, 'es'));
 const RAR = {comun: 'Común', raro: 'Raro', epico: 'Épico', legendario: 'Legendario'};
 let cat = 'todo';
 const precios = {};
