@@ -60,11 +60,17 @@ nav a.l:hover{color:var(--gold2)}
 .btn.alt{background:#6f6f6f}
 
 /* paneles con bisel */
-.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+/* rejillas simétricas: 4 columnas, 2 en tablet, 1 en teléfono (8 tarjetas quedan siempre parejas) */
+.grid{display:grid;gap:16px;grid-template-columns:repeat(4,1fr)}
+@media (max-width:1000px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.grid{grid-template-columns:1fr}}
 .card{background:var(--card);border:3px solid #000;box-shadow:var(--bisel);padding:22px}
 .card h3{font-size:1.25rem;color:#fff}
 .card p{margin:0;color:var(--mute)}
 .card .ic{margin-bottom:10px}
+#mundo .card,.steps .card{text-align:center}
+#mundo .card .ic img{margin:0 auto}
+#mundo .ranks{justify-content:center}
 .card .ic img{width:48px;height:48px;display:block;background:#373737;padding:6px;box-shadow:inset 3px 3px 0 #1e1e1e,inset -3px -3px 0 #5a5a5a;border:2px solid #000}
 .alt-bg{background:linear-gradient(rgba(20,14,10,.84),rgba(20,14,10,.84)),url(img/arte/tierra.png) 0 0/64px}
 .alt-bg::before{content:"";position:absolute;left:0;right:0;top:-4px;height:32px;background:url(img/arte/pasto.png) 0 0/64px 32px repeat-x;border-top:4px solid #000}
@@ -73,9 +79,10 @@ nav a.l:hover{color:var(--gold2)}
 .ranks span{font-family:var(--px);padding:2px 9px;background:#3a2c1e;color:var(--gold2);border:2px solid #000}
 
 /* pasos */
-.steps{counter-reset:s;display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.steps{counter-reset:s;display:grid;gap:16px;grid-template-columns:repeat(3,1fr)}
+@media (max-width:760px){.steps{grid-template-columns:1fr}}
 .steps .card{position:relative;padding-top:52px}
-.steps .card::before{counter-increment:s;content:counter(s);position:absolute;top:14px;left:22px;width:30px;height:30px;
+.steps .card::before{counter-increment:s;content:counter(s);position:absolute;top:14px;left:calc(50% - 15px);width:30px;height:30px;
   background:var(--gold);color:#2a1a05;font-family:var(--px);font-size:1.1rem;display:grid;place-items:center;border:2px solid #000;box-shadow:inset -3px -3px 0 rgba(0,0,0,.3)}
 
 /* tiendita */
@@ -87,7 +94,7 @@ nav a.l:hover{color:var(--gold2)}
 .pt::after{content:" Pt";font-size:.8em;color:var(--mute)}
 .clp{color:var(--mute);font-size:.9rem}
 .pack{text-align:center}
-#packs{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+
 .pack .coin{width:56px;height:56px;margin:0 auto;image-rendering:pixelated;filter:grayscale(1) brightness(1.5)}   /* moneda de platino */
 .pack .amt{font-family:var(--px);font-size:2.1rem;color:#fff;margin:8px 0 0;text-shadow:3px 3px 0 #333}
 .pack .money{font-family:var(--px);font-size:1.4rem;margin:6px 0;color:#7cfc5c;text-shadow:2px 2px 0 #1d4512}
@@ -101,6 +108,10 @@ nav a.l:hover{color:var(--gold2)}
 .note.warn{background:#3a2418;color:#f3d9c6}
 
 /* Heatcraft */
+#heat{display:flex;flex-wrap:wrap;justify-content:center}
+#heat .heat{flex:0 1 calc((100% - 32px) / 3)}
+@media (max-width:1000px){#heat .heat{flex-basis:calc((100% - 16px) / 2)}}
+@media (max-width:560px){#heat .heat{flex-basis:100%}}
 .heat{text-align:center;display:flex;flex-direction:column}
 .heat .heat-img{width:96px;height:96px;margin:4px auto 10px;display:block;background:#2a1f2a;padding:12px;border:3px solid #000;box-shadow:inset 3px 3px 0 #4a3a4a,inset -3px -3px 0 #140e14}
 .heat h3{margin-bottom:4px}
@@ -125,8 +136,8 @@ nav a.l:hover{color:var(--gold2)}
 .count{color:var(--mute);font-size:.9rem;margin-top:14px}
 
 /* reglas */
-.rules{counter-reset:r;list-style:none;margin:0;padding:0;display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
-@media (max-width:400px){.rules{grid-template-columns:1fr}}
+.rules{counter-reset:r;list-style:none;margin:0;padding:0;display:grid;gap:10px;grid-template-columns:repeat(2,1fr)}
+@media (max-width:760px){.rules{grid-template-columns:1fr}}
 .rules li{counter-increment:r;position:relative;background:var(--card);border:3px solid #000;box-shadow:var(--bisel);padding:14px 16px 14px 56px;color:var(--mute)}
 .rules li b{color:var(--text)}
 .rules li::before{content:counter(r);position:absolute;left:14px;top:13px;width:30px;height:30px;background:#3a2c1e;color:var(--gold2);font-family:var(--px);display:grid;place-items:center;border:2px solid #000}
